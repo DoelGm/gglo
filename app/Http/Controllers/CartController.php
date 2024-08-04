@@ -23,9 +23,9 @@ class CartController extends Controller
         if (isset($cart[$id])) {
             // si el producto ya esta agragado
             $cart[$id]['count_cart']++;
-            if($product->descuento > 0){
+            if($product->discount > 0){
                 // si el producto ya esta agragado y tiene descuento
-                $descuento = ($product->descuento * $product->price)/100;
+                $descuento = ($product->discount * $product->price)/100;
                 $precioDescuento =$product->price -  $descuento;
                 $count = $cart[$id]['count_cart'];
                 $cart[$id]["price"] = $precioDescuento *$count;
@@ -37,11 +37,11 @@ class CartController extends Controller
             }
         } else {
             // Si el producto tiene descuento
-            if($product->descuento > 0){
+            if($product->discount > 0){
                 $cart[$id] = [
                     "name" => $product->name,
                     "count_cart" => 1,
-                    "price" => $product->price - $product->price * $product->descuento/100,
+                    "price" => $product->price - $product->price * $product->discount/100,
                     "description" => $product->description
                 ];
             }else{
@@ -65,8 +65,8 @@ class CartController extends Controller
         if ($request->id && $request->count_cart) {
             $cart = session()->get('cart');
             $product = Table_product::findOrFail($request->id);
-            if($product->descuento > 0){
-                $descuento = ($product->descuento * $product->price)/100;
+            if($product->discount > 0){
+                $descuento = ($product->discount * $product->price)/100;
                 $precioDescuento =$product->price - $descuento ;
                 $cart[$request->id]["count_cart"] = $request->count_cart;
                 $cart[$request->id]["price"] =  $precioDescuento * $request->count_cart;

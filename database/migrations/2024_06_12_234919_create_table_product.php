@@ -18,6 +18,7 @@ return new class extends Migration
             $table->integer('price');
             $table->integer('quantity_in_stock');
             $table->string('color');
+            $table->string('type');
             $table->string('dimensions');
             $table->string('size');
             $table->string('image_url');

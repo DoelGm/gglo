@@ -13,7 +13,7 @@
             <div class="container">
                 <div class="row justify-content-center">
                     @foreach ($products as $product)
-                         @if ($product->descuento > 0)
+                         @if ($product->discount > 0)
                             <div class="col-md-4 mb-3">
                                 <x-cardProduct :product="$product"/>
                             </div>

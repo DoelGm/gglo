@@ -52,5 +52,15 @@ class User extends Authenticatable
 
         return $this->role === 'admin';
     }
+    protected static function boot()
+    {
+        parent::boot();
+
+        static::creating(function ($user) {
+            if (is_null($user->role)) {
+                $user->role = 'user';
+            }
+        });
+    }
 
 }

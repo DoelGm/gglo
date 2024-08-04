@@ -2,8 +2,11 @@
 
 namespace App\Http\Controllers;
 use App\Models\Table_product;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
-
+use App\Models\User;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Redirect;
 class producto extends Controller
 {
     public function index(){
@@ -61,4 +64,90 @@ class producto extends Controller
         $product = Table_product::findOrFail($id);
         return view('infomacion-Producto', compact('product'));
     }
+    public function modProduct(){
+        $products = Table_product::all();
+        return view('catalogo-productos', compact('products'));
+    }
+    public function newProduct(Request $request){
+
+        $request->validate([
+            'name' => ['required', 'string', 'max:255'],
+            'description' => ['required', 'string', 'max:255'],
+            'price' => ['required', 'integer'],
+            'type'=> ['required', 'string'],
+            'brand'=>['required', 'string'],
+            'discount'=>['required', 'numeric'],
+            'quantity_in_stock'=>['required', 'integer'],
+            'color'=>['required', 'string'],
+            'status'=>['required', 'string']
+        ]);
+
+        Table_product::create([
+            'name' => $request->name,
+            'description' => $request->description,
+            'price' => $request->price,
+            'type' => $request->type,
+            'brand' => $request->brand,
+            'discount' => $request->discount,
+            'quantity_in_stock' => $request->quantity_in_stock,
+            'color' => $request->color,
+            'status' => $request->status
+        ]);
+
+        return redirect()->route('products');
+    }
+    public function editProduct($id)
+    {
+        // Buscar el producto por su ID
+        $product = Table_product::findOrFail($id);
+
+        // Retornar la vista de edición del producto, pasando el producto como parámetro
+        return view('product.editProduct', compact('product'));
+    }
+
+    public function updateProduct(Request $request, $id){
+
+        $product = Table_product::findOrFail($id);
+        // dd($user);
+        // if (Gate::denies('update', [$user, $request->user()])) {
+        //     abort(403); // Puedes personalizar la respuesta de acceso denegado según tus necesidades
+        // }
+        if (Auth::user()->role === 'admin') {
+            $validatedData = $request->validate([
+                'name' => ['required', 'string', 'max:255'],
+                'description' => ['required', 'string', 'max:255'],
+                'price' => ['required', 'integer'],
+                'type' => ['required', 'string', 'max:10'],
+                'brand' => ['required', 'string'],
+                'discount' => ['required', 'numeric'],
+                'quantity_in_stock' => ['required', 'integer'],
+                'color' => ['required', 'string'],
+                'status' => ['required', 'string']
+            ]);
+            $product->fill($validatedData);
+            $product->save();
+
+
+            return redirect()->route('products')->with('status', 'Usuario actualizado correctamente.');
+
+        } return redirect()->route('dashboard');
+    }
+    public function delete($id)
+    {
+        // Buscar el producto por su ID
+        $product = Table_product::findOrFail($id);
+
+        // Retornar la vista de edición del producto, pasando el producto como parámetro
+        return view('product.deleteProduct', compact('product'));
+    }
+    public function destroy($id)
+    {
+        $product = Table_product::findOrFail($id);
+        if(Auth::user()->role === 'admin'){
+            $product->delete();
+            return redirect()->route('products');
+        }
+
+    }
+
 }

@@ -23,7 +23,7 @@
                     </x-nav-link>
                 </div>
                 <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
-                    <x-nav-link :href="route('clothes')" :active="request()->routeIs('clothes')">
+                    <x-nav-link :href="route('products')" :active="request()->routeIs('products')">
                         <x-icons><i class="bi bi-box-seam"></i> </x-icons> {{ __('Control de productos') }}
                     </x-nav-link>
                 </div>

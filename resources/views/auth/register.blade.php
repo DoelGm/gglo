@@ -54,7 +54,7 @@
         <div class="mt-4">
             <div class="row">
                 <div class="col-md-1 align-self-start"><input id="role" name="role" type="checkbox" class="form-check-input" value="admin" autofocus /></div>
-                <div class="col-md-11 align-self-end"><x-input-label for="role" ><a class="underline text-sm text-gray-600 hover:text-gray-900 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500" href="">{{ __('Aceptas los termninos y condiciones') }}</a></x-input-label></div>
+                <div class="col-md-11 align-self-end"><x-input-label for="role" ><a class="underline text-sm text-gray-600 hover:text-gray-900 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500" href="/terminos y condiciones">{{ __('Aceptas los termninos y condiciones') }}</a></x-input-label></div>
             </div>
 
 

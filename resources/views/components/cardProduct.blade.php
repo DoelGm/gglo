@@ -5,16 +5,16 @@
     <h5 class="card-title text-primary "><x-link :href="route('info', ['id'=> $product->id])">{{ $product->name }}</x-link></h5>
 
     <p class="card-text">{{ $product->description}}</p>
-    @if ($product->descuento > 0)
+    @if ($product->discount > 0)
                 <?php
-                    $descuento = $product->descuento;
+                    $descuento = $product->discount;
                     $precio = $product->price;
                     $desc =  $descuento*$precio/100;
                     $precioDescuento = $precio-$desc;
                 ?>
                 <!-- <p class="fs-6 badge text-bg-success text-wrap">En oferta</p> -->
                 <p class="fs-6 text-danger text-decoration-line-through">Precio: $ {{ $product->price}}</p>
-                <p class="fs-6 text-success">Precio actual: ${{$precioDescuento}} <small class="badge text-bg-warning text-wrap card-text ">{{ $product->descuento}}% OFF</small></p>
+                <p class="fs-6 text-success">Precio actual: ${{$precioDescuento}} <small class="badge text-bg-warning text-wrap card-text ">{{ $product->discount}}% OFF</small></p>
                 @else
                 <p class="card-text text-success">Precio: ${{ $product->price}}</p>
     @endif

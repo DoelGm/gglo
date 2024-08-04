@@ -12,8 +12,13 @@ class Table_product extends Model
 
         'name',
         'description',
-        'descuento',
+        'discount',
         'marca',
+        'type',
+        'brand',
+        'status',
+        'color',
+        'quantity_in_stock',
         'price',
 
 
