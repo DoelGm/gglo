@@ -17,7 +17,6 @@ Route::get('/dashboard', [producto::class, 'index'])->middleware(['auth', 'verif
 
 Route::get('/users', [usersController::class, 'index'])->middleware(['auth', 'verified'])->name('users');
 
-Route::post('/create-payment', [PaymentController::class, 'createPayment'])->name('create.payment');
 
 Route::get('/cart', [CartController::class, 'index'])->name('cart');
 Route::get('add-to-cart/{id}', [CartController::class, 'addToCart'])->name('cart.add');
@@ -53,5 +52,22 @@ Route::middleware('auth')->group(function () {
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
+
+
+use App\Http\Controllers\PayPalController;
+
+Route::post('create-payment', [PayPalController::class, 'createPayment'])->name('create.payment');
+Route::get('paypal/success', function () {
+    return 'Payment Successful';
+})->name('paypal.success');
+Route::get('paypal/error', function () {
+    return 'Payment Failed';
+})->name('paypal.error');
+
+// Ruta para manejar la respuesta de PayPal después de aprobar el pago
+Route::get('/paypal/callback', [PayPalController::class, 'handlePaymentCallback'])->name('paypal.callback');
+
+// Ruta para manejar la respuesta de PayPal si el usuario cancela el pago
+Route::get('/paypal/cancel', [PayPalController::class, 'handlePaymentCancel'])->name('paypal.cancel');
 
 require __DIR__.'/auth.php';

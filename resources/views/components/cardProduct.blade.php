@@ -1,6 +1,6 @@
 <!-- resources/views/components/card-product.blade.php -->
 <div class="card shadow mx-auto" style="width: 100%;">
-  <img src="{{ asset('img/placeholder.png') }}" class="card-img-top" style="height: 16rem;" alt="...">
+<img src="{{ asset($product->image_url ? 'img/'.$product->image_url : 'img/placeholder.png') }}" class="card-img-top" style="height: 16rem;" alt="...">
   <div class="card-body">
     <h5 class="card-title text-primary "><x-link :href="route('info', ['id'=> $product->id])">{{ $product->name }}</x-link></h5>
 
